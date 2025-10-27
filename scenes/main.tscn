@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://mqf7l736aan8"]
+
+[ext_resource type="PackedScene" uid="uid://dd6k48jwybhp8" path="res://scenes/background.tscn" id="1_o5qli"]
+[ext_resource type="PackedScene" uid="uid://bhkf5s6323o0k" path="res://scenes/player.tscn" id="2_0wfyh"]
+[ext_resource type="PackedScene" uid="uid://b3ln5xbtp8dph" path="res://scenes/ui.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" path="res://scenes/entity_spawner.tscn" id="4_6spwn"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="5_main"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("5_main")
+
+[node name="Background" parent="." instance=ExtResource("1_o5qli")]
+position = Vector2(1, 234)
+
+[node name="Player" parent="." instance=ExtResource("2_0wfyh")]
+position = Vector2(600, 600)
+
+[node name="UI" parent="." instance=ExtResource("3_sugp2")]
+
+[node name="EntitySpawner" parent="." instance=ExtResource("4_6spwn")]

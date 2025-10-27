@@ -1,5 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
+<<<<<<< HEAD
 .nomedia
 
 # Godot-specific ignores
@@ -14,3 +15,17 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+=======
+/android/
+.import/
+.export/
+.cache/
+mono/temp/
+*.tmp
+*.blend1
+*.import
+.godot/
+# If using Godot 4 exports:
+*.pck
+*.zip
+>>>>>>> d777c73 (first upload to github)

@@ -1,0 +1,7 @@
+[gd_scene load_steps=1 format=3]
+
+[node name="BGSegment" type="Node2D"]
+
+[node name="Rect" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, 1280, 0, 1280, 720, 0, 720)
+color = Color(0.215686, 0.423529, 0.592157, 1)
