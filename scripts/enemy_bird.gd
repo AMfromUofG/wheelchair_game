@@ -6,6 +6,8 @@ extends Area2D
 # "enemy" group so the spawner can cap the number of concurrent enemies.
 
 @export var speed: float = 180.0
+# Multiplier to increase overall size (applied to collision first)
+@export var size_scale: float = 1.6
 # If true, scale the visual to (roughly) match the collision box
 @export var match_visual_to_collision: bool = true
 @export var visual_inset_px: float = 0.0  # positive shrinks a touch for fairness
@@ -14,6 +16,8 @@ func _ready():
 	monitoring = true
 	add_to_group("enemy")
 	connect("body_entered", _on_body_entered)
+	# Enlarge collision first so visuals can match it
+	_scale_collision_shape()
 	if match_visual_to_collision:
 		_fit_visual_to_collision()
 
@@ -56,3 +60,17 @@ func _fit_visual_to_collision():
 				Vector2( w/2.0,  h/2.0),
 				Vector2(-w/2.0,  h/2.0)
 			])
+
+func _scale_collision_shape():
+	# Applies size_scale to the RectangleShape2D, but first duplicates the
+	# shared Shape resource so size changes are per-instance (do not
+	# accumulate across future spawns).
+	if size_scale == 1.0:
+		return
+	var cs: CollisionShape2D = $CollisionShape2D
+	if cs and cs.shape is RectangleShape2D:
+		var rect_src := cs.shape as RectangleShape2D
+		var rect := rect_src.duplicate() as RectangleShape2D
+		rect.resource_local_to_scene = true
+		rect.size = rect_src.size * size_scale
+		cs.shape = rect
