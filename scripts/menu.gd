@@ -6,12 +6,12 @@ extends Control
 # 3) Navigate to the Intro scene when the user presses Play
 
 func _ready():
-    Global.reset()
-    Global.state = "MENU"
-    var btn: Button = $Center/VBox/PlayButton
-    btn.pressed.connect(_on_play)
+	Global.reset()
+	Global.state = "MENU"
+	var btn: Button = $Center/VBox/PlayButton
+	btn.pressed.connect(_on_play)
 
 func _on_play():
-    # Intro computes the starting boost and then switches to Main.
-    Global.state = "INTRO"
-    get_tree().change_scene_to_file("res://scenes/intro.tscn")
+	# Intro computes the starting boost and then switches to Main.
+	Global.state = "INTRO"
+	get_tree().change_scene_to_file("res://scenes/intro.tscn")
