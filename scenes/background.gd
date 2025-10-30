@@ -8,10 +8,11 @@ extends Node2D
 @export var segment_height: int = 720            # height of one BG tile
 
 func _process(delta):
-	# Freeze when not in RUNNING (DEAD/MENU/INTRO).
-	if Global.state != "RUNNING":
-		return
-	for seg in get_children():
-		seg.position.y += scroll_speed * delta
-		if seg.position.y >= segment_height:
-			seg.position.y -= segment_height * 2
+    # Freeze when not in RUNNING (DEAD/MENU/INTRO).
+    if Global.state != "RUNNING":
+        return
+    var mult := Global.boost
+    for seg in get_children():
+        seg.position.y += scroll_speed * mult * delta
+        if seg.position.y >= segment_height:
+            seg.position.y -= segment_height * 2

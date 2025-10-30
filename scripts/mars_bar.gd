@@ -14,7 +14,7 @@ func _ready():
 func _process(delta):
 	if Global.state != "RUNNING":
 		return
-	position.y += speed * delta
+	position.y += speed * Global.boost * delta
 	if position.y > get_viewport_rect().size.y + 50:
 		queue_free()
 

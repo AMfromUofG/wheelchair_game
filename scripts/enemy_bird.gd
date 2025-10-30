@@ -24,12 +24,12 @@ func _ready():
 func _process(delta):
 	if Global.state != "RUNNING":
 		return
-	position.y += speed * delta
+	position.y += speed * Global.boost * delta
 	if position.y > get_viewport_rect().size.y + 50:
 		queue_free()
 
 func _on_body_entered(body):
-	if body.name == "Player" and Global.alive:
+	if body.name == "Player" and Global.alive and not Global.invincible:
 		Global.alive = false
 		Global.state = "DEAD"
 

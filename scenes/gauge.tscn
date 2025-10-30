@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://w64q5tjdo3m"]
+
+[ext_resource type="Script" uid="uid://bchud8xjhmlpr" path="res://scripts/gauge.gd" id="1_gauge"]
+
+[node name="Gauge" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_gauge")
+bar_size = Vector2(300, 22)
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 0
+color = Color(0.15, 0.15, 0.15, 1)
+
+[node name="Base" type="TextureRect" parent="Bg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 1
+
+[node name="Cursor" type="TextureRect" parent="Bg"]
+layout_mode = 0
+mouse_filter = 2
+stretch_mode = 1

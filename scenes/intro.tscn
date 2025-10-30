@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxrxl1yd6emh6"]
+[gd_scene load_steps=3 format=3 uid="uid://dxrxl1yd6emh6"]
 
 [ext_resource type="Script" uid="uid://od626rpwk86t" path="res://scripts/intro.gd" id="1_intro"]
+[ext_resource type="PackedScene" uid="uid://w64q5tjdo3m" path="res://scenes/gauge.tscn" id="2_gauge"]
 
 [node name="Intro" type="Control"]
 layout_mode = 3
@@ -28,15 +29,10 @@ alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "Boost Gauge — Click at Center!"
-horizontal_alignment = 1
 
-[node name="Gauge" type="TextureProgressBar" parent="Margin/VBox"]
+[node name="Gauge" parent="Margin/VBox" instance=ExtResource("2_gauge")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-mouse_filter = 2
 
 [node name="Hint" type="Label" parent="Margin/VBox"]
 layout_mode = 2
 text = "Click to lock in boost"
-horizontal_alignment = 1

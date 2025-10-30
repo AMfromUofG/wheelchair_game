@@ -7,16 +7,25 @@ extends Node2D
 # - Maintains the score counter based on background scroll speed.
 # - Handles click-to-menu on death.
 
-@export var pixels_per_meter: float = 4.0  # maps pixels -> meters for score
+@export var pixels_per_meter: float = 60.0  # pixels per 1 meter (tweak to taste)
 
 @onready var bg = $Background
 @onready var spawner = $EntitySpawner
 
+# Accumulator to keep score smooth and frame-rate independent.
+var meters_accum: float = 0.0
+
 func _ready():
-	# Preserve intro boost if present, then reset the rest.
+	# Preserve intro boost state (timed) if present, then reset the rest.
 	var boost_chosen := Global.boost
+	var inv_chosen := Global.invincible
+	var time_left := Global.boost_time_left
 	Global.reset()
-	if boost_chosen > 1.0:
+	if time_left > 0.0:
+		Global.boost_time_left = time_left
+		Global.boost = max(1.0, boost_chosen)
+		Global.invincible = inv_chosen
+	elif boost_chosen > 1.0:
 		Global.boost = boost_chosen
 	Global.alive = true
 	Global.state = "RUNNING"
@@ -28,15 +37,22 @@ func _ready():
 func _process(delta):
 	if Global.state != "RUNNING":
 		return
-	# Score increases with background scroll speed.
-	var has_scroll := false
+	# Handle timed boost countdown and auto-clear
+	if Global.boost_time_left > 0.0:
+		Global.boost_time_left = max(0.0, Global.boost_time_left - delta)
+		if Global.boost_time_left == 0.0:
+			Global.boost = 1.0
+			Global.invincible = false
+	# Score increases with background scroll speed. Accumulate as float,
+	# then write the integer meters to Global so the HUD stays clean.
+	var bg_speed := 0.0
 	if bg:
-		for p in bg.get_property_list():
-			if p.name == "scroll_speed":
-				has_scroll = true
-				break
-	if has_scroll:
-		Global.score += int((bg.scroll_speed / pixels_per_meter) * delta)
+		# background.gd exports scroll_speed; read directly if present
+		bg_speed = bg.scroll_speed if "scroll_speed" in bg else 0.0
+	# Apply boost multiplier so distance matches on-screen movement
+	var effective_speed := bg_speed * Global.boost
+	meters_accum += (effective_speed / pixels_per_meter) * delta
+	Global.score = int(meters_accum)
 
 func _unhandled_input(event):
 	# After death, a click returns to the Menu (hard reset of flow).

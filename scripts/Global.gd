@@ -17,6 +17,8 @@ var mars_bars:int = 0     # Run-local currency (resets on new run)
 var boost:float = 1.0     # 1.0..2.0 multiplier set by Intro mini-game
 var alive:bool = true     # Convenience flag used by some scripts
 var state:String = "MENU" # Current state label
+var invincible: bool = false
+var boost_time_left: float = 0.0  # seconds remaining for timed boost
 
 func reset():
 	# Resets the per-run values. The caller decides what the next state is
@@ -25,3 +27,5 @@ func reset():
 	mars_bars = 0
 	boost = 1.0
 	alive = true
+	invincible = false
+	boost_time_left = 0.0
